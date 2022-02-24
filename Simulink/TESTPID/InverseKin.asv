@@ -1,0 +1,8 @@
+function [t1 t2] = fcn(x, y)
+    L1 = 20;
+    L2 = 15;
+    L3 = sqrt(x^2 + y^2);
+    
+    
+
+end
