@@ -8,7 +8,7 @@ CF = 100.0;
 sensorGain = 150.0;
 
 %PID Parameters
-K =11.0;
+K =10.0;
 Kp = 5.9;
 Ki = 8.9;
 Kd = 0.1;
