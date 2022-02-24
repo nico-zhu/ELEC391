@@ -8,6 +8,6 @@ function [t1, t2] = InverseKin(x, y)
     
     Theta = atan2(y,x);
     
-    t1 = (Theta + a)*180/pi;
-    t2 = ((b - (pi - t1*pi/180))*180/pi); 
+    t1 = real((Theta + a)*180/pi);
+    t2 = real(((b - (pi - t1*pi/180))*180/pi)); 
 end

@@ -1,6 +1,6 @@
 clear all
 
-testX = [ 10 -8 10 -25]';
+testX = [ 90 -8 10 -25]';
 testY = [ 32 -8 -14 9]';
 
 t1 = [ 0 0 0 0]';
@@ -33,7 +33,7 @@ for i = 1 : 4
     plot(arm2Xx, arm2Yy, '-r');
 end
 
-ylim([-40 40]);
-xlim([-40 40]);
+ylim([-100 100]);
+xlim([-100 100]);
 
 
