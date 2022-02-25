@@ -33,6 +33,7 @@ for i = 1 : 4
     plot(arm2Xx, arm2Yy, '-r');
 end
 
+
 ylim([-100 100]);
 xlim([-100 100]);
 
