@@ -1,43 +1,3 @@
-%%%BASE MOTOR
-clear all
-
-extra = 0;
-r2d = 180/pi;
-
-SimTime = 5.0;
-CF = 1000.0;
-sensorGain = 150.0;
-
-%PID Parameters
-K = 800.0;
-Kp = 5.0;
-Ki = 0.2;
-Kd = 0.5;
-
-Km = 23.4*1e-3;
-Kv = Km;
-
-L = 0.0774e-3;
-R = 0.212;
-J = (102+10.7)*1e-7;%nischay hack 2.72e-7 is only of the motor
-
-Amp_num = 5;
-Amp_denom = 5;
-
-%We know that Torque = B*v
-%V = no load speed
-INoLoad = 177*1e-3;
-NoLoadSpeed = 7200/60*2*pi;
-NoLoadTorque = Kv * INoLoad;
-B = NoLoadTorque / NoLoadSpeed; %Bm
-
-GearRatio = 111.0;
-J = J*GearRatio^2;
-B = B*GearRatio^2;
-
-impulse_width = 1e-6;
-
-%------------VoltageAmplifier----------
 %------------CACL1----------------
 %Experimental Data from a Data Sheet
 %from the plot, I get the following values 
@@ -77,11 +37,51 @@ tf1 = tf(num1, den1);
 %estimate 2 (use omega_n_tp)
 num2 = [ 0 0 final*omega_n_tp^2];
 den2 = [1 2*zeta*omega_n_tp omega_n_tp^2];
-VoltageAmplifier = tf(num2, den2);
+tf2 = tf(num2, den2);
 
 %estimate 1 (use omega_n_tr)
 num3 = [ 0 0 final*omega_n_tr^2];
 den3 = [1 2*zeta*omega_n_tr omega_n_tr^2];
 tf3 = tf(num3, den3);
-%------------------------------------------------------
 
+%now generate step 
+%input from 0 is 16V.
+testpoints = 10000;
+time = (linspace(0, 150*1e-6, testpoints))';
+voltage = (linspace(1, 1, testpoints))';
+
+
+%compute the step response of each TF
+tf1_sim = lsim(tf1, voltage, time);
+tf2_sim = lsim(tf2, voltage, time);
+tf3_sim = lsim(tf3, voltage, time);
+
+%now plot all four curves
+figure(3);
+hold on;
+grid on;
+box on;
+plot(time*1e3, tf1_sim, ':r', 'LineWidth', 3);
+plot(time*1e3, tf2_sim, ':k', 'LineWidth', 3);
+plot(time*1e3, tf3_sim, ':b', 'LineWidth', 3);
+lgd = legend('Estimate #1', 'Estimate #2', 'Estimate #3', 'Location', 'southeast');
+xlabel('Time (msec)');
+ylabel('Output (volts)');
+title('Comparision between Experimental Data and Estimated Data'); 
+hold off;
+
+%------------CALC5-------------------
+%Accurate Values seen from the graph
+SettleTime_accurate = 78.0;%ms
+OverShoot_Accurate_pct = (20.21-16.0)*100/16.0;
+
+%-----------CALC6----------------
+%use pole() command to get poles
+systemPoles = pole(tf1);
+systemPoles = systemPoles';
+
+%-------------Plot Poles--------
+%use the pzmap function;
+figure(4);
+pzmap(tf1);
+grid on;

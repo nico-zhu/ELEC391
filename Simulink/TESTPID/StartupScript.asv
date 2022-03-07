@@ -5,14 +5,14 @@ extra = 0;
 r2d = 180/pi;
 
 SimTime = 5.0;
-CF = 1000.0;
+CF = 100.0;
 sensorGain = 150.0;
 
 %PID Parameters
-K = 800.0;
-Kp = 5.0;
-Ki = 0.2;
-Kd = 0.5;
+K = 11.0;
+Kp = 5.9;
+Ki = 8.9;
+Kd = 0.1;
 
 Km = 23.4*1e-3;
 Kv = Km;
@@ -31,9 +31,8 @@ NoLoadSpeed = 7200/60*2*pi;
 NoLoadTorque = Kv * INoLoad;
 B = NoLoadTorque / NoLoadSpeed; %Bm
 
-GearRatio = 111.0;
-J = J*GearRatio^2;
-B = B*GearRatio^2;
+GearRatio = 111.0
+J = J*i
 
 impulse_width = 1e-6;
 
