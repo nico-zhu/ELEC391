@@ -5,14 +5,16 @@ extra = 0;
 r2d = 180/pi;
 
 SimTime = 5.0;
+solverTimeStep = 1e-5;
 CF = 1000.0;
 sensorGain = 150.0;
+PWMFreq = 10*1e3;
 
 %PID Parameters
-K = 800.0;
-Kp = 5.0;
-Ki = 0.2;
-Kd = 0.5;
+K = 1.0;
+Kp = 500.0;
+Ki = 90.0;
+Kd = 100.0;
 
 Km = 23.4*1e-3;
 Kv = Km;
@@ -37,6 +39,9 @@ B = B*GearRatio^2;
 
 impulse_width = 1e-6;
 
+%creating a time vector
+timeSamplingFreq = 1/solverTimeStep;
+SimTimeVector = linspace(0, SimTime, SimTime*timeSamplingFreq)';
 %------------VoltageAmplifier----------
 %------------CACL1----------------
 %Experimental Data from a Data Sheet
