@@ -12,9 +12,17 @@ PWMFreq = 10*1e3;
 
 %PID Parameters
 K = 1.0;
-Kp = 500.0;
-Ki = 90.0;
-Kd = 100.0;
+Kp = 2000.0;
+Ki = 0;
+Kd = 0.0;
+
+%PID PWM parameters
+
+K = 1.0;
+Kp = 2.8;
+Ki = 0.00;
+Kd = 0.05;
+%}
 
 Km = 23.4*1e-3;
 Kv = Km;
@@ -46,11 +54,11 @@ SimTimeVector = linspace(0, SimTime, SimTime*timeSamplingFreq)';
 %------------CACL1----------------
 %Experimental Data from a Data Sheet
 %from the plot, I get the following values 
-peak = 18.442/5; %hack 20.21 
-final = 17.76/5;%hack 16.0
+peak = 17.986/5; %hack 20.21 
+final = 17.985/5;%hack 16.0
 Overshoot_val = peak - final;
-RiseTime = 4.9997*1e-6; %hack 18ms
-PeakTime = 6.05*1e-6; %hack 27ms
+RiseTime = 9.5897*1e-6; %hack 18ms
+PeakTime = 9.5899*1e-6; %hack 27ms
 SettleTime = 10.0*1e-6; %hack 78ms
 Overshoot_pct = (peak-final)/final*100; %percentage
 
@@ -60,16 +68,16 @@ Overshoot_pct = (peak-final)/final*100; %percentage
 %so zeta = sqrt(ln^2(OS/FV)/(pi^2+ln^2(OS/Fv))
 zeta = sqrt(log(Overshoot_val/final)^2/(pi^2+log(Overshoot_val/final)^2));
 %to calculate wn = 4/(Zeta*SettleTime)
-omega_n = 4/(zeta*SettleTime*1e-3);
+omega_n = 4/(zeta*SettleTime*1);
 
 %-----------CALC3----------------
 %Wn using peaktime = pi/(beta*Tpeak)
 beta = sqrt(1- zeta^2);
-omega_n_tp = pi/(1e-3*PeakTime*beta);
+omega_n_tp = pi/(1*PeakTime*beta);
 
 %----------CALC4------------------
 %Omega_n using RiseTime = atan(beta/zeta)/(beta*Trise)
-omega_n_tr = (pi-atan(beta/zeta))/(beta*RiseTime*1e-3);
+omega_n_tr = (pi-atan(beta/zeta))/(beta*RiseTime);
 
 %---------Making Tranfer Function---
 %based on the notes, the TF of of second order system is
