@@ -284,6 +284,10 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=TTBLLQYE
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for MotherBoard\Design Rule Check - MotherBoardPCB.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
