@@ -1,6 +1,6 @@
 function [x, y] = ForwardKin(t1, t2)
     
-    Larm1 = 20;
+    Larm1 = 35;
     Larm2 = 15;
     
     arm1X = Larm1 * cos(t1*pi/180);

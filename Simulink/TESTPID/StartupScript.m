@@ -5,7 +5,7 @@ print = 0;
 %------------------------------Simulation Parameters----------------------
 extra = 0;
 r2d = 180/pi;
-SimTime = 20.0;
+SimTime = 5.0;
 solverTimeStep = 1e-5;
 CF = 1000.0;
 PWMFreq = 10*1e3;
@@ -64,7 +64,7 @@ VoltageAmplifier = tf(num2, den2);
 
 %----------Saturation and limits-------------
 Vsat = 18.0;
-Isat = 12.0;
+Isat = 10.0;
 PidLim = 1024;
 PidUCGain = 5/1024;
 %--------------------------------------------------------------------------
@@ -137,20 +137,20 @@ Kdb = 1050;
 %}
 
 s = tf('s');
-Dyn = Poleb/(Zerob^2)*((s+Zerob)^2/(s*(s+Poleb)));
+Dynb = Poleb/(Zerob^2)*((s+Zerob)^2/(s*(s+Poleb)));
 %Dyn1 = Kb*(Kpb + tf([0, 1], [1, 0])*Kib + tf([2*CF, 0],[1, 2*CF])*Kdb); %Didnt Work
 
-NewOpenLoopBase = BaseMotorOpenLoop * Dyn;
+NewOpenLoopBase = BaseMotorOpenLoop * Dynb;
 %see if zeros are correct.
 if(print == 1)
-    figure(2)
-    margin(NewOpenLoopBase)
+    %figure(2)
+    %margin(NewOpenLoopBase)
 end
 %Kb = 1/abs(freqresp(NewOpenLoopBase,Zerob));
 Kb = 800.0;%200 20 15 8 3
-NewOpenLoopBase1 = BaseMotorOpenLoop * Dyn * Kb;
+NewOpenLoopBase1 = BaseMotorOpenLoop * Dynb * Kb;
 
-SystemGb = Kb * Dyn * VoltageAmplifier * BaseMotorFullModel * 1/s;
+SystemGb = Kb * Dynb * VoltageAmplifier * BaseMotorFullModel * 1/s;
 SystemCLTFb = SystemGb/(1+SystemGb*Hs);
 
 %StepResonses
@@ -159,14 +159,95 @@ testpoints = 10000;
 time = (linspace(0, 20.0, testpoints))';
 input = (linspace(pi/2, pi/2, testpoints))';
 CL_bsim = lsim(SystemCLTFb, input, time);
-figure(2);
+%figure(2);
 hold on;
 grid on;
 box on;
-plot(time, CL_bsim*r2d, 'k', 'LineWidth', 3);
+%plot(time, CL_bsim*r2d, 'k', 'LineWidth', 3);
 xlabel('Time(sec)');
 ylabel('Angle(deg)');
 title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
 hold off;
 %-----------------BASE MOTOR ENDS----------------------------------------
+
+%----------------ARM MOTOR----------------------------------------------
+Kma = 19.5*1e-3;
+Kva = Kma;
+La = 0.0525e-3;
+Ra = 0.165;
+Jmotora = 75.9*1e-7;
+Jgeara = 9.961*1e-7;
+Jmotorcombineda = Jmotora + Jgeara;%motor inertia + gear inertia 
+
+%Calculating Motor Friction
+%We know that Torque = B*v
+%V = no load speed
+INoLoada = 234*1e-3;
+NoLoadSpeeda = 8630/60*2*pi;
+NoLoadTorquea = Kva * INoLoada;
+Bmotora = NoLoadTorquea / NoLoadSpeeda; %Bm
+%Gear Friction
+% Use this -> Bgear*noloadspeed = (1-efficiency)*Torque_out
+Bgeara = Bmotora;%4.58366236105*1e-2; <-Not sure about this value but this is wrong.
+Bmotorcombineda = Bmotora + Bgeara;
+
+GearRatioa = 172.0;
+Jmotorouta = Jmotorcombineda*GearRatioa^2;
+Bmotorouta = Bmotorcombineda*GearRatioa^2;
+
+JtotalArmMotor = Jmotorouta + JArmMotorLoad;
+%-----Transfer Functions-----
+Electricala = tf([0, 1], [La, Ra]);
+Mechanicala = tf([0, 1], [JtotalArmMotor, Bmotorouta]);
+ArmMotorFullModel = Electricala * Kma * GearRatioa * Mechanicala/(1 + Kma * GearRatioa * Electricala * Kma * GearRatioa * Mechanicala);
+
+%----------------PID Controller Parameters---------------------------------
+ArmMotorOpenLoop = VoltageAmplifier * ArmMotorFullModel * Hs * tf([0,1], [1,0]);
+
+%Pid Tuning for Base Motor
+Ka = 1;%15.4
+Zeroa = (1.28e+3)/10;
+Polea = 2*CF;
+
+%PID Parameters
+Kpa = 2/(Zeroa) - 1/Polea ;
+Kia = 1.0;
+Kda = 1/(Zeroa^2) - Kpa/Polea ;
+%System Test
+
+Kpa = 1500;
+Kia = 0;
+Kda = 150;
+
+
+Dyna = Polea/(Zeroa^2)*((s+Zeroa)^2/(s*(s+Polea)));
+%Dyn1 = Kb*(Kpb + tf([0, 1], [1, 0])*Kib + tf([2*CF, 0],[1, 2*CF])*Kdb); %Didnt Work
+
+NewOpenLoopArm = ArmMotorOpenLoop * Dyna;
+%see if zeros are correct.
+if(print == 1)
+    figure(3)
+    margin(NewOpenLoopArm)
+end
+%Ka = 1/abs(freqresp(NewOpenLoopArm,Zeroa));
+Ka = 1;%3000
+NewOpenLoopArm1 = ArmMotorOpenLoop * Dyna * Ka;
+
+SystemGa = Ka * Dyna * VoltageAmplifier * ArmMotorFullModel * 1/s;
+SystemCLTFa = SystemGa/(1+SystemGa*Hs);
+
+%StepResonses
+%now generate step 
+CL_asim = lsim(SystemCLTFa, input, time);
+%figure(4);
+hold on;
+grid on;
+box on;
+%plot(time, CL_asim*r2d, 'k', 'LineWidth', 3);
+xlabel('Time(sec)');
+ylabel('Angle(deg)');
+title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
+hold off;
+%--------------------------ARM MOTOR ENDS-------------------------------
+
 
