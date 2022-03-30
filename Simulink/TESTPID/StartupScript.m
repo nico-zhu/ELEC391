@@ -1,13 +1,13 @@
 %%%BASE MOTOR
-clear all
+
 
 print = 0;
 %------------------------------Simulation Parameters----------------------
 extra = 0;
 r2d = 180/pi;
-SimTime = 5.0;
-solverTimeStep = 1e-5;
-CF = 1000.0;
+SimTime = 10.0;
+SimStepTime = 1e-3;
+CF = 372.0;
 PWMFreq = 10*1e3;
 impulse_width = 1e-6;
 
@@ -21,8 +21,7 @@ Kd = 0.05;
 %}
 
 %creating a time vector
-timeSamplingFreq = 1/solverTimeStep;
-SimTimeVector = linspace(0, SimTime, SimTime*timeSamplingFreq)';
+SimTimeVector = SimStepTime*(0:SimTime*(1/SimStepTime))';
 
 
 %---------------------------VoltageAmplifier-------------------------------
@@ -75,7 +74,7 @@ PidUCGain = 5/1024;
 
 %------Model Inertias and Masses----------------
 JBaseMotorLoad = 0.65648373469;
-JArmMotorLoad = 0.05760189627;
+JArmMotorLoad = 0.05801749292;
 
 %------------------BASE MOTOR------------------------
 Kmb = 23.4*1e-3;
@@ -164,9 +163,9 @@ hold on;
 grid on;
 box on;
 %plot(time, CL_bsim*r2d, 'k', 'LineWidth', 3);
-xlabel('Time(sec)');
-ylabel('Angle(deg)');
-title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
+%xlabel('Time(sec)');
+%ylabel('Angle(deg)');
+%title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
 hold off;
 %-----------------BASE MOTOR ENDS----------------------------------------
 
@@ -244,9 +243,9 @@ hold on;
 grid on;
 box on;
 %plot(time, CL_asim*r2d, 'k', 'LineWidth', 3);
-xlabel('Time(sec)');
-ylabel('Angle(deg)');
-title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
+%xlabel('Time(sec)');
+%ylabel('Angle(deg)');
+%title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
 hold off;
 %--------------------------ARM MOTOR ENDS-------------------------------
 

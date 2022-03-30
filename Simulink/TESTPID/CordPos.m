@@ -21,29 +21,29 @@ figure(1)
 hold on
 
 a = tic;
-for i = 1 : length(time)
-    ylim([-50 50]);
-    xlim([-50 50]);
-    arm1X = BaseL * cos(BaseAngle(i+100)*pi/180);
-    arm1Y = BaseL * sin(BaseAngle(i+100)*pi/180);
+for i = 1 :50: length(time)
+    ylim([0 50]);
+    xlim([0 50]);
+    arm1X = BaseL * cos(BaseAngle(i)*pi/180);
+    arm1Y = BaseL * sin(BaseAngle(i)*pi/180);
     arm1Xx = [0 arm1X];
     arm1Yy = [0 arm1Y];
 
-    arm2X = ArmL * cos(ArmAngle(i+100)*pi/180);
-    arm2Y = ArmL * sin(ArmAngle(i+100)*pi/180);
+    arm2X = ArmL * cos(ArmAngle(i)*pi/180);
+    arm2Y = ArmL * sin(ArmAngle(i)*pi/180);
     arm2Xx = [arm1X, arm2X + arm1X];
     arm2Yy = [arm1Y, arm2Y + arm1Y];
     
     
     h1 = plot(arm1Xx, arm1Yy, '-b', 'LineWidth', 3);
     h2 = plot(arm2Xx, arm2Yy, '-g', 'LineWidth', 3);
-    h3 = plot(Xc(i+100), Yc(i+100), 'LineWidth', 3);
+    h3 = plot(Xc(i), Yc(i), 'LineWidth', 3);
     
     %addpoints(h,Xc(i), Yc(i));
     %addpoints(h, arm1Xx, arm1Yy);
     %addpoints(h, arm2Xx, arm2Yy);
     b = toc(a); % check timer
-    if b > (1/500)
+    if b > (1/5000000000)
         drawnow % update screen every 1/30 seconds
         a = tic; % reset timer after updating
     end
@@ -52,8 +52,9 @@ for i = 1 : length(time)
         delete(h2);
         delete(h3);
     end
+    %drawnow 
 end
-drawnow
+drawnow 
 
 
 
