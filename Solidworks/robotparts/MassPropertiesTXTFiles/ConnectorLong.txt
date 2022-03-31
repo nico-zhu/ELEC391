@@ -1,0 +1,34 @@
+Mass properties of connector_long
+     Configuration: 默认
+     Coordinate system: rotationAxis
+
+Density = 0.00 grams per cubic millimeter
+
+Mass = 219.37 grams
+
+Volume = 81248.95 cubic millimeters
+
+Surface area = 22908.61  square millimeters
+
+Center of mass: ( millimeters )
+	X = 0.03
+	Y = -29.36
+	Z = -0.03
+
+Principal axes of inertia and principal moments of inertia: ( grams *  square millimeters )
+Taken at the center of mass.
+	 Ix = (-0.06,  0.00, -1.00)   	Px = 134663.86
+	 Iy = ( 1.00,  0.00, -0.06)   	Py = 134665.05
+	 Iz = ( 0.00, -1.00,  0.00)   	Pz = 256089.84
+
+Moments of inertia: ( grams *  square millimeters )
+Taken at the center of mass and aligned with the output coordinate system.
+	Lxx = 134665.14	Lxy = 109.25	Lxz = 0.17
+	Lyx = 109.25	Lyy = 256089.66	Lyz = -104.42
+	Lzx = 0.17	Lzy = -104.42	Lzz = 134663.96
+
+Moments of inertia: ( grams *  square millimeters )
+Taken at the output coordinate system.
+	Ixx = 323778.57	Ixy = -66.08	Ixz = 0.00
+	Iyx = -66.08	Iyy = 256089.99	Iyz = 76.33
+	Izx = 0.00	Izy = 76.33	Izz = 323777.38

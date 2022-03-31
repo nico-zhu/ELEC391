@@ -33,3 +33,5 @@ end
 %finally Convert output to suitable datatype ~~Timeseries
 XposT = timeseries(Xpos, SimTimeVector);
 YposT = timeseries(Ypos, SimTimeVector);
+figure(2)
+plot(Xpos, Ypos)

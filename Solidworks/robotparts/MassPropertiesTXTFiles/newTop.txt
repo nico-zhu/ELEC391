@@ -1,0 +1,34 @@
+Mass properties of NewTop
+     Configuration: Default
+     Coordinate system: RotationAxisCoordinate system
+
+Density = 0.00 grams per cubic millimeter
+
+Mass = 3096.75 grams
+
+Volume = 2894162.24 cubic millimeters
+
+Surface area = 462625.87  square millimeters
+
+Center of mass: ( millimeters )
+	X = 87.26
+	Y = -0.03
+	Z = 112.71
+
+Principal axes of inertia and principal moments of inertia: ( grams *  square millimeters )
+Taken at the center of mass.
+	 Ix = ( 0.37,  0.00,  0.93)   	Px = 18649892.34
+	 Iy = ( 0.93,  0.00, -0.37)   	Py = 46411968.27
+	 Iz = ( 0.00,  1.00,  0.00)   	Pz = 56845158.08
+
+Moments of inertia: ( grams *  square millimeters )
+Taken at the center of mass and aligned with the output coordinate system.
+	Lxx = 42510009.00	Lxy = 2958.67	Lxz = 9648898.61
+	Lyx = 2958.67	Lyy = 56845156.13	Lyz = -4097.05
+	Lzx = 9648898.61	Lzy = -4097.05	Lzz = 22551853.54
+
+Moments of inertia: ( grams *  square millimeters )
+Taken at the output coordinate system.
+	Ixx = 81850968.07	Ixy = -4189.78	Ixz = 40107738.63
+	Iyx = -4189.78	Iyy = 119768176.32	Iyz = -13330.06
+	Izx = 40107738.63	Izy = -13330.06	Izz = 46133918.99

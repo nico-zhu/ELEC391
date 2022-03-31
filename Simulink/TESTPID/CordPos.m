@@ -17,13 +17,13 @@ BaseAngle = BaseAngle';
 ArmAngle = ArmAngle';
 
 h = animatedline('MaximumNumPoints',5);
-figure(1)
+figure(3)
 hold on
 
 a = tic;
-for i = 1 :50: length(time)
-    ylim([0 50]);
-    xlim([0 50]);
+for i = 1 :25: length(time)
+    ylim([-50 50]);
+    xlim([-50 50]);
     arm1X = BaseL * cos(BaseAngle(i)*pi/180);
     arm1Y = BaseL * sin(BaseAngle(i)*pi/180);
     arm1Xx = [0 arm1X];
@@ -54,6 +54,9 @@ for i = 1 :50: length(time)
     end
     %drawnow 
 end
+    h1 = plot(arm1Xx, arm1Yy, '-b', 'LineWidth', 3);
+    h2 = plot(arm2Xx, arm2Yy, '-g', 'LineWidth', 3);
+    h3 = plot(Xc(i), Yc(i), 'LineWidth', 3);
 drawnow 
 
 

@@ -1,6 +1,6 @@
 %Script to Generate Path
 %all measurements are in Centimeters
-timeNeeded = 2.0;   %this will dictate the speed of the path.
+timeNeeded = 1.0;   %this will dictate the speed of the path.
 timeSteps = timeNeeded ./ SimStepTime;
 
 InputX = [45 30 28 24 31 25]';
@@ -47,3 +47,5 @@ end
 %finally Convert output to suitable datatype ~~Timeseries
 XposT = timeseries(Xpos, SimTimeVector);
 YposT = timeseries(Ypos, SimTimeVector);
+figure(2)
+plot(Xpos, Ypos)

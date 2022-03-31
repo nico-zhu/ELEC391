@@ -1,0 +1,34 @@
+Mass properties of long_arm
+     Configuration: 默认
+     Coordinate system: RotationAxis
+
+Density = 0.00 grams per cubic millimeter
+
+Mass = 1742.87 grams
+
+Volume = 645507.99 cubic millimeters
+
+Surface area = 103150.79  square millimeters
+
+Center of mass: ( millimeters )
+	X = -154.69
+	Y = 0.00
+	Z = 10.25
+
+Principal axes of inertia and principal moments of inertia: ( grams *  square millimeters )
+Taken at the center of mass.
+	 Ix = (-1.00,  0.00,  0.00)   	Px = 1396182.57
+	 Iy = ( 0.00,  1.00,  0.00)   	Py = 23096846.30
+	 Iz = ( 0.00,  0.00, -1.00)   	Pz = 24348648.33
+
+Moments of inertia: ( grams *  square millimeters )
+Taken at the center of mass and aligned with the output coordinate system.
+	Lxx = 1396753.10	Lxy = -160.43	Lxz = -114431.79
+	Lyx = -160.43	Lyy = 23096846.30	Lyz = 40.02
+	Lzx = -114431.79	Lzy = 40.02	Lzz = 24348077.80
+
+Moments of inertia: ( grams *  square millimeters )
+Taken at the output coordinate system.
+	Ixx = 1579814.07	Ixy = -331.20	Ixz = -2877427.21
+	Iyx = -331.20	Iyy = 64982646.29	Iyz = 51.34
+	Izx = -2877427.21	Izy = 51.34	Izz = 66050816.82

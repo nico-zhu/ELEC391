@@ -1,11 +1,8 @@
-%%%BASE MOTOR
-
-
 print = 0;
 %------------------------------Simulation Parameters----------------------
 extra = 0;
 r2d = 180/pi;
-SimTime = 10.0;
+SimTime = 5.0;
 SimStepTime = 1e-3;
 CF = 372.0;
 PWMFreq = 10*1e3;
@@ -68,10 +65,7 @@ PidLim = 1024;
 PidUCGain = 5/1024;
 %--------------------------------------------------------------------------
 
-
-
 %-----------------------SYSTEM MODEL---------------------------------------
-
 %------Model Inertias and Masses----------------
 JBaseMotorLoad = 0.65648373469;
 JArmMotorLoad = 0.05801749292;
@@ -129,11 +123,11 @@ Kpb = 2/(Zerob) - 1/Poleb ;
 Kib = 1.0;
 Kdb = 1/(Zerob^2) - Kpb/Poleb ;
 %System Test
-%{
-Kpb = 1000;
-Kib = 0;
-Kdb = 1050;
-%}
+
+%Kpb = 10;
+%Kib = 0;
+%Kdb = 0;
+
 
 s = tf('s');
 Dynb = Poleb/(Zerob^2)*((s+Zerob)^2/(s*(s+Poleb)));
@@ -205,7 +199,7 @@ ArmMotorOpenLoop = VoltageAmplifier * ArmMotorFullModel * Hs * tf([0,1], [1,0]);
 
 %Pid Tuning for Base Motor
 Ka = 1;%15.4
-Zeroa = (1.28e+3)/10;
+Zeroa = (15.4)/10;
 Polea = 2*CF;
 
 %PID Parameters
@@ -214,9 +208,9 @@ Kia = 1.0;
 Kda = 1/(Zeroa^2) - Kpa/Polea ;
 %System Test
 
-Kpa = 1500;
-Kia = 0;
-Kda = 150;
+%Kpa = 1500;
+%Kia = 0;
+%Kda = 1500;
 
 
 Dyna = Polea/(Zeroa^2)*((s+Zeroa)^2/(s*(s+Polea)));
@@ -229,7 +223,7 @@ if(print == 1)
     margin(NewOpenLoopArm)
 end
 %Ka = 1/abs(freqresp(NewOpenLoopArm,Zeroa));
-Ka = 1;%3000
+Ka = 800;%3000
 NewOpenLoopArm1 = ArmMotorOpenLoop * Dyna * Ka;
 
 SystemGa = Ka * Dyna * VoltageAmplifier * ArmMotorFullModel * 1/s;
@@ -248,5 +242,35 @@ box on;
 %title('Step Responses of the Closed Loop Transfer Functions MotorBase'); 
 hold off;
 %--------------------------ARM MOTOR ENDS-------------------------------
+
+%-----------SystemModel 2nd Attempt USE STATE SPACE------------------------
+JM1 = Jmotoroutb;
+JM2 = Jmotorouta;
+JA1 = 0.06605081682;
+JA2 = 0.05742841905;
+BM1 = Bmotoroutb;
+BM2 = Bmotorouta;
+B1 = Bmotora;
+
+%Forming State Space Matrices
+AMat = [(-BM1-(BM2+B1))/(JM1+JA1) (BM2+B1)/(JM1+JA1);
+        (BM2+B1)/(JM2+JA2) -(BM2+B1)/(JM2+JA1)];
+
+BMat = [1/(JM1 + JA2) 0; 
+        0 1/(JM2 + JA2)]';
+
+CMat = [1 0;
+        0 1];
+    
+DMat = [0 0;
+        0 0]';
+
+PhiMat = inv((s * eye(2) - AMat));
+EMat = CMat * PhiMat * BMat + DMat;
+
+MechModel = ss(AMat, BMat, CMat, DMat);
+
+
+
 
 
