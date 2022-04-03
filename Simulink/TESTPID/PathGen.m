@@ -4,8 +4,8 @@ timeNeeded = 2.0;   %this will dictate the speed of the path.
 timeSteps = timeNeeded ./ SimStepTime;
 startX = 45.0;
 startY = 0.0;
-endX = 0.0;
-endY = 35.0;
+endX = 20.0;
+endY = 00.0;
 
 %now we generate a straight line of the from y = mx + c
 slope = (endY - startY)/(endX - startX);

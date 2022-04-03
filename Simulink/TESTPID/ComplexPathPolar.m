@@ -1,10 +1,10 @@
 %Script to Generate Path POLAR Cords
 %all measurements are in Centimeters
-timeNeeded = 0.2;   %this will dictate the speed of the path.
-timeSteps = timeNeeded ./ SimStepTime;
+totaltime = 2.0;
 
-InputR = [45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45  45];
-InputT = [ 0  5 10 15 20 25 30 35 40 45 60 65 70 75 80 85 90 95 100 105 ];
+ InputR = [45 45 45 45 45 45 45 45 45 45 45 45 45 45  45  45  45  45  45  45  45  45  45  45  45  44  43  42  41  40  40  40  40  40  40  40  40  40  40  40 40 40 40 40 40 40 40 40 40 40 40 40 40 40];
+ InputT = [30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125 130 135 140 145 150 150 150 150 150 150 145 140 135 130 125 120 115 110 105 100 95 90 85 80 75 70 65 60 55 50 45 40 35 30];
+
 InputT = InputT * pi/180;
 PositionVectorLength = length(InputR);
 InputX = zeros(PositionVectorLength, 1);
@@ -16,6 +16,8 @@ for i = 1 : PositionVectorLength
 end
 
 numlines = length(InputX)-1;
+timeNeeded =totaltime/numlines;   %this will dictate the speed of the path.
+timeSteps = timeNeeded ./ SimStepTime;
 slope = zeros((numlines), 1);
 const = slope;
 Xstep = slope;

@@ -29,10 +29,10 @@ for i = 1 :25: length(time)
     arm1Xx = [0 arm1X];
     arm1Yy = [0 arm1Y];
 
-    arm2X = ArmL * cos(ArmAngle(i)*pi/180);
-    arm2Y = ArmL * sin(ArmAngle(i)*pi/180);
-    arm2Xx = [arm1X, arm2X + arm1X];
-    arm2Yy = [arm1Y, arm2Y + arm1Y];
+    arm2X = ArmL * cos((ArmAngle(i)+BaseAngle(i))*pi/180);
+    arm2Y = ArmL * sin((ArmAngle(i)+BaseAngle(i))*pi/180);
+    arm2Xx = [arm1X, arm2X];
+    arm2Yy = [arm1Y, arm2Y];
     
     
     h1 = plot(arm1Xx, arm1Yy, '-b', 'LineWidth', 3);
