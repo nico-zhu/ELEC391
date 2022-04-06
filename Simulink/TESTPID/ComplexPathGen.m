@@ -1,9 +1,16 @@
 %Script to Generate Path
 %all measurements are in Centimeters
-totaltime = 2.0;
-
+totaltime = 2.2;
+%Rectangle
 InputX = [38.97 26 10 10 26 26]';
 InputY = [ 22.5 15 15 25 25 15]';
+
+%Letter N
+%InputX = [38.97 10 10 26 26 38.97]';
+%InputY = [22.50 15 35 15 35 22.50]';
+
+%InputX = [38.97 38.97]';
+%InputY = [22.50 22.50]';
 
 numlines = length(InputX)-1;
 timeNeeded =totaltime/numlines;   %this will dictate the speed of the path.
